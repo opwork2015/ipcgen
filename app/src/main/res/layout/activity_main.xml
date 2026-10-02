@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="#121212">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        android:text="ipcgen"
         android:textSize="30sp"
-        android:textColor="@color/colorPrimary"
+        android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
     <TextView
@@ -19,23 +19,22 @@
         android:layout_height="wrap_content"
         android:text="Run ISO / IMG via QEMU"
         android:textSize="16sp"
-        android:textColor="@color/light_gray"
+        android:textColor="#CCCCCC"
         android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/selectImageBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/select_button"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/colorPrimary" />
+        android:text="Select ISO / IMG"
+        android:layout_marginTop="24dp" />
 
     <TextView
         android:id="@+id/pathText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/no_file_selected"
-        android:textColor="@color/light_gray"
+        android:text="No file selected"
+        android:textColor="#B0BEC5"
         android:layout_marginTop="12dp"
         android:padding="8dp" />
 
@@ -43,25 +42,22 @@
         android:id="@+id/startQemuBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/start_button"
-        android:layout_marginTop="18dp"
-        android:backgroundTint="@color/colorAccent" />
+        android:text="Start"
+        android:layout_marginTop="18dp" />
 
     <Button
         android:id="@+id/stopQemuBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/stop_button"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/colorPrimaryDark" />
+        android:text="Stop Background"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/statusText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ready"
-        android:textColor="@color/colorAccent"
+        android:text="Ready"
+        android:textColor="#81C784"
         android:layout_marginTop="18dp"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textSize="15sp" />
 </LinearLayout>
