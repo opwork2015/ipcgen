@@ -17,86 +17,119 @@ public class QemuService extends Service {
 
     private static final String TAG = "QemuService";
     private static final String CHANNEL_ID = "ipcgen_channel";
+    private static final int NOTIFICATION_ID = 1;
     private Process qemuProcess;
     private boolean isRunning = false;
+    private Thread monitorThread;
 
     @Override
     public void onCreate() {
-        super.onCreate();
-        startForegroundService();
+        try {
+            super.onCreate();
+            Log.d(TAG, "Service onCreate called");
+        } catch (Exception e) {
+            Log.e(TAG, "Error in onCreate: " + e.getMessage());
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent == null) {
-            stopSelf();
-            return START_NOT_STICKY;
-        }
+        try {
+            Log.d(TAG, "onStartCommand called");
 
-        String imagePath = intent.getStringExtra("image_path");
-        if (imagePath == null || imagePath.trim().isEmpty()) {
-            stopSelf();
-            return START_NOT_STICKY;
-        }
+            // Create notification channel first
+            createNotificationChannel();
+            startForegroundNotification();
 
-        startQemu(imagePath);
-        return START_STICKY;
+            if (intent == null) {
+                Log.w(TAG, "Intent is null");
+                return START_STICKY;
+            }
+
+            String imagePath = intent.getStringExtra("image_path");
+            if (imagePath == null || imagePath.trim().isEmpty()) {
+                Log.w(TAG, "Image path is empty");
+                return START_STICKY;
+            }
+
+            Log.d(TAG, "Starting QEMU with image: " + imagePath);
+            startQemu(imagePath);
+            return START_STICKY;
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error in onStartCommand: " + e.getMessage());
+            return START_STICKY;
+        }
     }
 
-    private void startForegroundService() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "ipcgen";
-            String channelId = CHANNEL_ID;
+    private void createNotificationChannel() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(
+                        CHANNEL_ID,
+                        "ipcgen Service",
+                        NotificationManager.IMPORTANCE_LOW
+                );
+                channel.setDescription("QEMU VM Service");
 
-            NotificationChannel channel = new NotificationChannel(
-                    channelId,
-                    name,
-                    NotificationManager.IMPORTANCE_LOW
-            );
-
-            NotificationManager manager = (NotificationManager) getSystemService(NotificationManager.class);
-            if (manager != null) {
-                manager.createNotificationChannel(channel);
+                NotificationManager manager = (NotificationManager) getSystemService(NotificationManager.class);
+                if (manager != null) {
+                    manager.createNotificationChannel(channel);
+                    Log.d(TAG, "Notification channel created");
+                }
             }
+        } catch (Exception e) {
+            Log.e(TAG, "Error creating notification channel: " + e.getMessage());
         }
+    }
 
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                this,
-                0,
-                notificationIntent,
-                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
-        );
+    private void startForegroundNotification() {
+        try {
+            Intent notificationIntent = new Intent(this, MainActivity.class);
+            PendingIntent pendingIntent = null;
 
-        Notification.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder = new Notification.Builder(this, CHANNEL_ID);
-        } else {
-            builder = new Notification.Builder(this);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                pendingIntent = PendingIntent.getActivity(
+                        this, 0, notificationIntent,
+                        PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
+                );
+            } else {
+                pendingIntent = PendingIntent.getActivity(
+                        this, 0, notificationIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+            }
+
+            Notification.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                builder = new Notification.Builder(this, CHANNEL_ID);
+            } else {
+                builder = new Notification.Builder(this);
+            }
+
+            builder.setContentTitle("ipcgen")
+                    .setContentText("QEMU VM is running")
+                    .setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setContentIntent(pendingIntent);
+
+            startForeground(NOTIFICATION_ID, builder.build());
+            Log.d(TAG, "Foreground service started");
+        } catch (Exception e) {
+            Log.e(TAG, "Error in startForegroundNotification: " + e.getMessage());
         }
-
-        builder.setContentTitle("ipcgen")
-                .setContentText("QEMU VM is running in background")
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentIntent(pendingIntent);
-
-        startForeground(1, builder.build());
     }
 
     private void startQemu(String imagePath) {
         try {
             File qemuBin = findQemuBinary();
-
-            if (qemuBin == null || !qemuBin.exists()) {
-                Log.e(TAG, "QEMU binary not found.");
-                stopSelf();
+            if (qemuBin == null) {
+                Log.e(TAG, "QEMU binary not found in any location");
                 return;
             }
 
             File imgFile = new File(imagePath);
             if (!imgFile.exists()) {
                 Log.e(TAG, "Image file not found: " + imagePath);
-                stopSelf();
                 return;
             }
 
@@ -115,16 +148,12 @@ public class QemuService extends Service {
 
             qemuProcess = Runtime.getRuntime().exec(command);
             isRunning = true;
-            Log.d(TAG, "QEMU executed: " + qemuBin.getAbsolutePath());
+            Log.d(TAG, "QEMU process started: " + qemuBin.getAbsolutePath());
 
         } catch (IOException e) {
-            Log.e(TAG, "QEMU start failed: " + e.getMessage(), e);
-            isRunning = false;
-            stopSelf();
+            Log.e(TAG, "IOException starting QEMU: " + e.getMessage());
         } catch (Exception e) {
-            Log.e(TAG, "Unexpected error: " + e.getMessage(), e);
-            isRunning = false;
-            stopSelf();
+            Log.e(TAG, "Exception starting QEMU: " + e.getMessage());
         }
     }
 
@@ -137,25 +166,30 @@ public class QemuService extends Service {
         };
 
         for (String path : possiblePaths) {
-            File f = new File(path);
-            if (f.exists() && f.canExecute()) {
-                return f;
+            try {
+                File f = new File(path);
+                if (f.exists() && f.canExecute()) {
+                    Log.d(TAG, "Found QEMU binary: " + path);
+                    return f;
+                }
+            } catch (Exception e) {
+                Log.d(TAG, "Error checking " + path + ": " + e.getMessage());
             }
         }
-
         return null;
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        if (qemuProcess != null) {
-            try {
+        try {
+            if (qemuProcess != null && isRunning) {
                 qemuProcess.destroy();
                 isRunning = false;
-            } catch (Exception e) {
-                Log.e(TAG, "Error destroying process: " + e.getMessage());
+                Log.d(TAG, "QEMU process destroyed");
             }
+            super.onDestroy();
+        } catch (Exception e) {
+            Log.e(TAG, "Error in onDestroy: " + e.getMessage());
         }
     }
 

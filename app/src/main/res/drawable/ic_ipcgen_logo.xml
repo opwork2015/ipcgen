@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="192dp"
+    android:height="192dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+
+    <!-- Background -->
+    <path
+        android:pathData="M 0 0 L 1024 0 L 1024 1024 L 0 1024 Z"
+        android:fillColor="#e8f4f8" />
+
+    <!-- Shield with gradient effect using multiple paths -->
+    <!-- Shield outline -->
+    <path
+        android:pathData="M 380 180 L 650 80 L 800 150 L 800 520 C 800 760 620 900 500 970 C 380 900 200 760 200 520 L 200 150 Z"
+        android:fillColor="#3dd9f7"
+        android:strokeColor="#0d6b88"
+        android:strokeWidth="12" />
+
+    <!-- Shield darker overlay -->
+    <path
+        android:pathData="M 380 220 L 620 120 L 750 180 L 750 540 C 750 720 600 840 500 900 C 400 840 250 720 250 540 L 250 180 Z"
+        android:fillColor="#1b9fc5" />
+
+    <!-- Folder/Document shapes -->
+    <path
+        android:pathData="M 300 500 L 520 300 L 680 300 L 480 500 Z"
+        android:fillColor="#d0f8ff"
+        android:fillAlpha="0.9" />
+
+    <path
+        android:pathData="M 400 250 L 540 250 L 620 340 L 480 340 Z"
+        android:fillColor="#a8f0ff"
+        android:fillAlpha="0.8" />
+
+    <!-- Arrow pointing up right -->
+    <path
+        android:pathData="M 700 200 L 900 400 L 800 400 L 950 580 L 850 580 L 750 680 L 650 350 Z"
+        android:fillColor="#1ba3d4"
+        android:strokeColor="#0d5a6e"
+        android:strokeWidth="10" />
+
+    <!-- Circuit/Tech nodes -->
+    <circle
+        android:cx="380"
+        android:cy="450"
+        android:r="20"
+        android:fillColor="#1fb5d6"
+        android:strokeColor="#0d6b88"
+        android:strokeWidth="6" />
+
+    <circle
+        android:cx="550"
+        android:cy="350"
+        android:r="20"
+        android:fillColor="#1fb5d6"
+        android:strokeColor="#0d6b88"
+        android:strokeWidth="6" />
+
+    <circle
+        android:cx="650"
+        android:cy="500"
+        android:r="20"
+        android:fillColor="#1fb5d6"
+        android:strokeColor="#0d6b88"
+        android:strokeWidth="6" />
+
+    <circle
+        android:cx="750"
+        android:cy="380"
+        android:r="20"
+        android:fillColor="#1fb5d6"
+        android:strokeColor="#0d6b88"
+        android:strokeWidth="6" />
+
+    <!-- Circuit connecting lines -->
+    <line
+        android:x1="380"
+        android:y1="450"
+        android:x2="550"
+        android:y2="350"
+        android:strokeColor="#1fb5d6"
+        android:strokeWidth="6"
+        android:strokeLineCap="round" />
+
+    <line
+        android:x1="550"
+        android:y1="350"
+        android:x2="650"
+        android:y2="500"
+        android:strokeColor="#1fb5d6"
+        android:strokeWidth="6"
+        android:strokeLineCap="round" />
+
+    <line
+        android:x1="650"
+        android:y1="500"
+        android:x2="750"
+        android:y2="380"
+        android:strokeColor="#1fb5d6"
+        android:strokeWidth="6"
+        android:strokeLineCap="round" />
+
+    <!-- Bottom bar -->
+    <path
+        android:pathData="M 300 600 L 800 600 L 750 660 L 350 660 Z"
+        android:fillColor="#b8f3ff"
+        android:fillAlpha="0.85" />
+</vector>
