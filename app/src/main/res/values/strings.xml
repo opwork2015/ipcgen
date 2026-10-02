@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ipcgen</string>
+    <string name="start_button">Start</string>
+    <string name="stop_button">Stop Background</string>
+    <string name="select_button">Select ISO / IMG</string>
+    <string name="no_file_selected">No file selected</string>
+    <string name="ready">Ready</string>
+</resources>
