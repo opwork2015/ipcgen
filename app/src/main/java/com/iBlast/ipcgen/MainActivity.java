@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.support.v7.app.AppCompatActivity;
+
 import java.io.File;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private static final int PICK_FILE_REQUEST = 1001;
     private TextView pathText;
@@ -55,13 +57,13 @@ public class MainActivity extends Activity {
                 statusText.setText("Starting QEMU...");
                 Intent service = new Intent(MainActivity.this, QemuService.class);
                 service.putExtra("image_path", selectedPath);
-                
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     startForegroundService(service);
                 } else {
                     startService(service);
                 }
-                
+
                 Toast.makeText(MainActivity.this, "QEMU service started", Toast.LENGTH_SHORT).show();
             }
         });
@@ -100,7 +102,7 @@ public class MainActivity extends Activity {
 
     private String getRealPathFromUri(Uri uri) {
         String path = uri.getPath();
-        if (path != null) {
+        if (path != null && !path.isEmpty()) {
             return path;
         }
         return "";

@@ -32,7 +32,7 @@ public class QemuService extends Service {
             stopSelf();
             return START_NOT_STICKY;
         }
-        
+
         String imagePath = intent.getStringExtra("image_path");
         if (imagePath == null || imagePath.trim().isEmpty()) {
             stopSelf();
@@ -115,7 +115,6 @@ public class QemuService extends Service {
 
             qemuProcess = Runtime.getRuntime().exec(command);
             isRunning = true;
-
             Log.d(TAG, "QEMU executed: " + qemuBin.getAbsolutePath());
 
         } catch (IOException e) {
