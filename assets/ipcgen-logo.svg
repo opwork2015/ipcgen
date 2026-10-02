@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="ipcgen logo">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#dfeef7"/>
+      <stop offset="100%" stop-color="#cfe7ef"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#3ad1f3"/>
+      <stop offset="100%" stop-color="#0d6d8a"/>
+    </linearGradient>
+    <linearGradient id="arrow" x1="0%" x2="100%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#9feefc"/>
+      <stop offset="100%" stop-color="#1bb3df"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <g transform="translate(140 130)">
+    <path d="M220 140 L550 40 L660 100 L660 430 C660 640 500 770 330 830 C160 770 0 640 0 430 L0 100 L110 60 Z" fill="none" stroke="#0b4d68" stroke-width="18"/>
+    <path d="M220 170 L520 90 L620 140 L620 440 C620 610 485 705 330 760 C175 705 40 610 40 440 L40 140 L120 110 Z" fill="url(#shield)" opacity="0.9"/>
+    <path d="M148 460 L430 240 L560 240 L350 460 Z" fill="#dff6ff" opacity="0.9"/>
+    <path d="M310 210 L462 210 L518 266 L388 266 Z" fill="#dff6ff" opacity="0.8"/>
+    <path d="M420 338 L674 338 L575 442 L515 442 Z" fill="#dff6ff" opacity="0.75"/>
+    <path d="M550 160 L760 350 L628 350 L810 540 L700 540 L592 628 L545 340 Z" fill="url(#arrow)" stroke="#0b4d68" stroke-width="16" stroke-linejoin="round"/>
+    <path d="M390 510 L820 510 L760 570 L430 570 Z" fill="#caf7ff" opacity="0.85"/>
+    <g fill="#1ab7d8" stroke="#0b4d68" stroke-width="8" stroke-linecap="round">
+      <circle cx="210" cy="360" r="18"/>
+      <circle cx="350" cy="300" r="18"/>
+      <circle cx="470" cy="430" r="18"/>
+      <circle cx="610" cy="310" r="18"/>
+      <path d="M210 360 L350 300"/>
+      <path d="M350 300 L470 430"/>
+      <path d="M470 430 L610 310"/>
+      <path d="M150 540 L270 540"/>
+      <path d="M640 515 L720 515"/>
+      <path d="M662 312 L735 312"/>
+      <path d="M730 312 L730 420"/>
+    </g>
+  </g>
+</svg>
